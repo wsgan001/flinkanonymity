@@ -43,19 +43,23 @@ public class KeyedJob {
     private static int marstHierarchy = 1;
     private static int countryHierarchy = 0;
 
-    private static int[] kvals = {40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
+    /* - For Evaluation of multiple k, l, n, p-values.
+    private static int[] kvals = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
     private static int[] lvals = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    private static int[] pvals = {10, 20, 30, 40};
-
+    private static int[] pvals = {1, 20, 40, 50};
+    private static int[] nvals = {50000, 250000, 500000, 750000, 1000000};
+    */
+    private static int[] nvals = {50000};
 
 
 
     public static void main(String[] args) throws Exception {
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < nvals.length; i++){
 
-            k = kvals[i];
-            l = lvals[i];
-            //parallelism = pvals[i];
+            k = 40;
+            l = 5;
+            parallelism = 10;
+            streamLength = nvals[i];
 
 
             ParameterTool params = ParameterTool.fromArgs(args);
@@ -85,8 +89,8 @@ public class KeyedJob {
             //Generalization workclass = new Generalization("workclass", workclass_hierarchy,1);
 
             // Initialize QuasiIdentifier
-            QID = new QuasiIdentifier(age, educ, marst);
             //QID = new QuasiIdentifier(age, educ, marst);
+            QID = new QuasiIdentifier(age, educ, marst, sex, race, country);
 
             // Setting up Environment
             StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -110,7 +114,7 @@ public class KeyedJob {
 
             output.print();
             String filename = "output-n_" + streamLength + "k_" + k + "l_" + l + "p_" + parallelism + ".csv";
-            output.writeAsText("../output/" + filename, org.apache.flink.core.fs.FileSystem.WriteMode.OVERWRITE).setParallelism(1); // setParalellism(1) yields ONE output file.
+            output.writeAsText("../output/ntest-6quasi/" + filename, org.apache.flink.core.fs.FileSystem.WriteMode.OVERWRITE).setParallelism(1); // setParalellism(1) yields ONE output file.
             env.execute();
         }
     }

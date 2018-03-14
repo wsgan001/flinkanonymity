@@ -1,16 +1,11 @@
 package org.flinkanonymity.process;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
 import org.apache.flink.streaming.api.windowing.windows.GlobalWindow;
 import org.apache.flink.util.Collector;
 import org.apache.flink.shaded.com.google.common.collect.Iterables;
 
 import org.flinkanonymity.datatypes.AdultData;
-import org.flinkanonymity.window.IdWindow;
-import org.flinkanonymity.window.UniqueUserWindow;
-
-import java.util.ArrayList;
 
 public class Release extends ProcessWindowFunction<AdultData, AdultData, String, GlobalWindow> {
     @Override

@@ -9,7 +9,6 @@ import org.apache.flink.api.common.functions.ReduceFunction;
 
 import org.apache.flink.streaming.api.windowing.windows.GlobalWindow;
 import org.flinkanonymity.datatypes.AdultData;
-import org.flinkanonymity.window.IdWindow;
 
 import java.util.ArrayList;
 
